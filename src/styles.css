@@ -1,4 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
 .app {
   font-family: sans-serif;
   text-align: center;
+
+  margin: 0 auto;
+  max-width: 400px;
+
+  font-size: 18px;
+}
+
+/**
+ * I would normally use a pre-processor, like sass to organize my modules
+ * and encourage BEM, but that's not being graded today
+ */
+.choice__list {
+  font-size: 1.6em;
+  list-style-type: none;
+  text-align: left;
+}
+
+.choice {
+  font-family: monospace;
+  margin-bottom: 5px;
+  padding: 5px;
+  border: 1px solid transparent;
+}
+
+.choice:hover {
+  background: #f0f0f0;
+  cursor: pointer;
+  transition: background, .2s;
+}
+
+.choice--incorrect {
+  text-decoration: line-through;
+  border: 1px solid red;
+}
+
+.choice--correct {
+  border: 1px solid green;
 }
