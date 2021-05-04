@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Quiz from './components/Quiz'
+import { Provider } from 'react-redux'
+import store from './store'
+import App from './App.js'
 
 import './styles.css';
 
-const App = () => {
-  return (
-    <div className="app">
-      <Quiz />
-    </div>
-  );
-};
+const ui =
+  <Provider store={store}>
+    <App />
+  </Provider>
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+ReactDOM.render(ui, document.getElementById('root'))
