@@ -9,10 +9,6 @@ import ResultItem from './ResultItem'
  * a quick "report card" of their results
  */
 class QuizResult extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const reportCard = gradeQuiz(this.props.currentQuiz, this.props.currentAnswers)
 
@@ -23,7 +19,6 @@ class QuizResult extends Component {
         <p>You had:</p>
         <ol className="results">
           {reportCard.gradedAnswers.map((a) => {
-            const classes = `results__answer results__answer--${a.correct ? 'correct' : 'incorrect'}`
             return (
               <ResultItem
                 key={a.question}

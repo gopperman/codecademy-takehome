@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { getMessage } from '../data/messages'
-import { gradeQuiz } from '../util/quizUtils'
 
 /**
  * The result item component is responsible for rendering a single answer result
