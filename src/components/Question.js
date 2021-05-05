@@ -6,7 +6,7 @@ import Choice from './Choice'
 
 /**
  * The question component is responsible for rendering a question's text and
- * a randomized list of potential answers
+ * a randomized list of potential answers.
  */
 class Question extends Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class Question extends Component {
     // This component's state will be initialized with the current question
     // and randomized answers (choices). Choices are stored in the component state so that
     // order can be preserved after answering
-    const question = getQuestion(this.props.currentQuiz, this.props.currentQuestion)
+    const quiz = this.props.quizzes[this.props.currentQuiz]
+    const question = getQuestion(quiz, this.props.currentQuestion)
     const choices = shuffleAnswers([
       question.correctAnswer,
       ...question.incorrectAnswers
@@ -83,7 +84,7 @@ class Question extends Component {
           <p className='question__result'>
             {this.isCorrect(userAnswer) ? 'Correct!' : 'Incorrect...'}
           </p>
-          <button className="question__next" onClick={this.incrementQuestion}>Next</button>
+          <button className="button" onClick={this.incrementQuestion}>Next</button>
         </div>
       )
     }
@@ -130,7 +131,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     currentAnswers: state.currentAnswers,
     currentQuestion: state.currentQuestion,
-    currentQuiz: state.currentQuiz
+    currentQuiz: state.currentQuiz,
+    quizzes: state.quizzes
   }
 }
 

@@ -14,14 +14,19 @@ class Quiz extends Component {
     super(props)
 
     // We'll always start with the first quiz, if available
-    if (!this.props.currentQuiz && this.props.quizzes.length) {
-      this.props.startQuiz(this.props.quizzes[0])
+    if (this.props.quizzes.length) {
+      this.props.startQuiz(0)
     }
   }
 
+  getQuiz() {
+    return this.props.quizzes[this.props.currentQuiz]
+  }
+
   isQuizFinished() {
-    if (this.props.currentQuestion && this.props.currentQuiz) {
-      return this.props.currentQuestion >= this.props.currentQuiz.questions.length
+    const activeQuiz = this.getQuiz()
+    if (this.props.currentQuestion && activeQuiz) {
+      return this.props.currentQuestion >= activeQuiz.questions.length
     } else {
       return undefined
     }
@@ -33,11 +38,12 @@ class Quiz extends Component {
   }
 
   render() {
-    if (this.props.currentQuiz) {
+    const activeQuiz = this.getQuiz()
+    if (activeQuiz) {
       const quizBody = this.isQuizFinished() ? (<QuizResult />) : (<Question key={this.props.currentQuestion} />)
       return (
-        <div key={this.props.currentQuiz.title}>
-          <h1>{this.props.currentQuiz.title}</h1>
+        <div key={activeQuiz.title}>
+          <h1>{activeQuiz.title}</h1>
 
           {quizBody}
         </div>

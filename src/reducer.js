@@ -1,7 +1,7 @@
 const initialState = {
   quizzes: [], // This will be the quizzes that are available
   quizResults: [], // quizResults will store the user's score and quiz status
-  currentQuiz: null, // For convenience, we will stash the active quiz in a new variable
+  currentQuiz: 0, // For convenience, we will stash the active quiz in a new variable
   currentAnswers: [], // currentAnswers will be an array of objects
   currentQuestion: 0, // currentQuestion is a reference to the index of what question we're on
 }
@@ -19,6 +19,10 @@ function rootReducer(state = initialState, action) {
         ]
       }
     case "INCREMENT_QUESTION":
+      /**
+       * We don't worry about incrementing past the length of questions in a quiz,
+       * as we use that to determine when a quiz is finished
+       */
       return {
         ...state,
         currentQuestion: state.currentQuestion + 1

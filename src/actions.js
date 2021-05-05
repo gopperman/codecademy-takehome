@@ -5,6 +5,7 @@ const answerQuestion = (payload) => {
 const incrementQuestion = () => {
   return { type: "INCREMENT_QUESTION" }
 }
+
 const initializeQuizzes = (payload) => {
   return { type: "LOAD_QUIZZES", payload }
 }

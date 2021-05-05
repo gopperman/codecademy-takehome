@@ -18,6 +18,18 @@
  */
 
 /**
+ * Buttons
+ */
+.button {
+  background: transparent;
+  border: 1px solid #222;
+  padding: 15px 50px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+/**
  * Choices
  */
 .choice__list {
@@ -50,15 +62,6 @@
 /**
  * Questions
  */
-.question__next {
-  background: transparent;
-  border: 1px solid #222;
-  padding: 15px 50px;
-}
-
-.question__next:hover {
-  cursor: pointer;
-}
 .question__result {
   font-style: italic;
 }

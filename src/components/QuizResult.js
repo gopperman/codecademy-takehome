@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getMessage } from '../data/messages'
 import { gradeQuiz } from '../util/quizUtils'
+import { startQuiz } from '../actions'
 import ResultItem from './ResultItem'
 
 /**
@@ -9,12 +10,23 @@ import ResultItem from './ResultItem'
  * a quick "report card" of their results
  */
 class QuizResult extends Component {
+  constructor(props) {
+    super(props)
+
+    this.startNextQuiz = this.startNextQuiz.bind(this)
+  }
+
+  startNextQuiz() {
+    this.props.startQuiz()
+  }
+
   render() {
-    const reportCard = gradeQuiz(this.props.currentQuiz, this.props.currentAnswers)
+    const activeQuiz = this.props.quizzes[this.props.currentQuiz]
+    const reportCard = gradeQuiz(activeQuiz, this.props.currentAnswers)
 
     return (
       <div>
-        <p>You got <b>{reportCard.score}</b> of <b>{this.props.currentQuiz.questions.length}</b> Questions right.</p>
+        <p>You got <b>{reportCard.score}</b> of <b>{reportCard.gradedAnswers.length}</b> Questions right.</p>
         <p>{getMessage()}</p>
         <p>You had:</p>
         <ol className="results">
@@ -29,6 +41,7 @@ class QuizResult extends Component {
             )
           })}
         </ol>
+        <button className="button" onClick={this.startNextQuiz}>Next</button>
       </div>
     )
   }
@@ -36,13 +49,15 @@ class QuizResult extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    startQuiz: quiz => dispatch(startQuiz(quiz))
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     currentQuiz: state.currentQuiz,
-    currentAnswers: state.currentAnswers
+    currentAnswers: state.currentAnswers,
+    quizzes: state.quizzes
   }
 }
 
