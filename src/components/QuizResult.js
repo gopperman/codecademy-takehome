@@ -17,7 +17,7 @@ class QuizResult extends Component {
     this.startNextQuiz = this.startNextQuiz.bind(this)
     this.retakeQuiz = this.retakeQuiz.bind(this)
 
-    // We'll store a user's "report card" via this component's state for easy access
+
     const quiz = this.props.quizzes[this.props.currentQuiz]
     const gradedQuiz = gradeQuiz(quiz, this.props.currentAnswers)
 
@@ -25,6 +25,7 @@ class QuizResult extends Component {
     const existingReportCard = getReportCard(this.props.reportCards, quiz.title)
     const attempts = existingReportCard ? (existingReportCard.attempts + 1) : 1
 
+    // We'll store a user's "report card" via this component's state for easy access
     this.state = {
       ...gradedQuiz,
       attempts: attempts

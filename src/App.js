@@ -35,9 +35,6 @@ class App extends Component {
       )
     }
   }
-
-
-
 }
 
 const  mapDispatchToProps = (dispatch) => {
