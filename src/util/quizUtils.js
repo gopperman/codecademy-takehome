@@ -1,11 +1,13 @@
 /**
- * Returns whether or not a user has finished all available quizzes
+ * Given a set of report cards and a quiz title, finds the correct report card
  * @param  {array} reportCards
- * @param  {array} quizzes
- * @return {boolean}
+ * @param  {string} quizTitle
+ * @return {object} the report card (or undefined)
  */
-const finishedAllQuizzes = (reportCards, quizzes) => {
-  return reportCards.length === quizzes.length
+const getReportCard = (reportCards, quizTitle) => {
+  return reportCards.find((rc) => {
+    return rc.quiz === quizTitle
+  })
 }
 
 /**
@@ -41,32 +43,7 @@ const gradeQuiz = (quiz, answers) => {
   }
 }
 
-/**
- * isPerfectStudent checks to see if a student has 100% comprehension
- * on all available quizzes
- * @param  {array} reportCards Report cards for completed quizzes
- * @return {boolean} true if all answers are correct
- */
-const isPerfectStudent = (reportCards) => {
-  // This will return an array of booleans, i.e [true, false, ...]
-  const perfectScores = reportCards.map((rc) => {
-    return rc.score === rc.gradedAnswers.length
-  })
-  /**
-   * This implementation has an interesting edge-case.
-   * If user has no report cards, i.e there weren't avaiable quizzes,
-   * then they have a "perfect score" and can load more quizzes
-   * It's a feature, not a bug!
-   */
-  const isPerfect = perfectScores.reduce((accumulator, perfect) => {
-    return accumulator && perfect
-  }, true)
-
-  return isPerfect
-}
-
 export {
-  finishedAllQuizzes,
-  gradeQuiz,
-  isPerfectStudent
+  getReportCard,
+  gradeQuiz
 }

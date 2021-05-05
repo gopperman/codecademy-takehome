@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getMessage } from '../data/messages'
-import { gradeQuiz } from '../util/quizUtils'
+import { getReportCard, gradeQuiz } from '../util/quizUtils'
 import { startQuiz, updateReportCard } from '../actions'
 import ResultItem from './ResultItem'
 
@@ -13,11 +13,22 @@ class QuizResult extends Component {
   constructor(props) {
     super(props)
 
+    // Bind this so we can access props during onClick events
     this.startNextQuiz = this.startNextQuiz.bind(this)
+    this.retakeQuiz = this.retakeQuiz.bind(this)
 
-    // We'll store a user's "report card" via this component's state
+    // We'll store a user's "report card" via this component's state for easy access
     const quiz = this.props.quizzes[this.props.currentQuiz]
-    this.state = gradeQuiz(quiz, this.props.currentAnswers)
+    const gradedQuiz = gradeQuiz(quiz, this.props.currentAnswers)
+
+    // Lookup existing report card so we can increment the number of attempts
+    const existingReportCard = getReportCard(this.props.reportCards, quiz.title)
+    const attempts = existingReportCard ? (existingReportCard.attempts + 1) : 1
+
+    this.state = {
+      ...gradedQuiz,
+      attempts: attempts
+    }
 
     // Finally, we'll update the user's "report card", i.e their graded quiz results
     this.props.updateReportCard(this.state)
@@ -31,12 +42,16 @@ class QuizResult extends Component {
     this.props.startQuiz(nextQuizIndex)
   }
 
+  retakeQuiz() {
+    this.props.startQuiz(this.props.currentQuiz)
+  }
 
   render() {
     return (
       <div>
         <p>You got <b>{this.state.score}</b> of <b>{this.state.gradedAnswers.length}</b> Questions right.</p>
         <p>{getMessage()}</p>
+        <p>This was attempt number <b>{this.state.attempts}</b></p>
         <p>You had:</p>
         <ol className="results">
           {this.state.gradedAnswers.map((a) => {
@@ -51,6 +66,7 @@ class QuizResult extends Component {
           })}
         </ol>
         <button className="button" onClick={this.startNextQuiz}>Next</button>
+        <button className="button" onClick={this.retakeQuiz}>Retake</button>
       </div>
     )
   }
