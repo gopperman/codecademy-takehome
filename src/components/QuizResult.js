@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getMessage } from '../data/messages'
 import { gradeQuiz } from '../util/quizUtils'
+import ResultItem from './ResultItem'
 
 /**
  * The QuizResult component is responsible for "grading" a user's quiz, and issuing
@@ -14,7 +15,7 @@ class QuizResult extends Component {
 
   render() {
     const reportCard = gradeQuiz(this.props.currentQuiz, this.props.currentAnswers)
-    console.log(reportCard)
+
     return (
       <div>
         <p>You got <b>{reportCard.score}</b> of <b>{this.props.currentQuiz.questions.length}</b> Questions right.</p>
@@ -24,9 +25,12 @@ class QuizResult extends Component {
           {reportCard.gradedAnswers.map((a) => {
             const classes = `results__answer results__answer--${a.correct ? 'correct' : 'incorrect'}`
             return (
-              <li key={a.question} className="results__item">
-                <i>{a.question}</i> <span className={classes}>{a.choice}</span>
-              </li>
+              <ResultItem
+                key={a.question}
+                choice={a.choice}
+                correct={a.correct}
+                question={a.question}
+              />
             )
           })}
         </ol>
