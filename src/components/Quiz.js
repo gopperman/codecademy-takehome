@@ -39,7 +39,8 @@ class Quiz extends Component {
   render() {
     const activeQuiz = this.getQuiz()
     if (activeQuiz) {
-      const quizBody = this.isQuizFinished() ? (<QuizResult />) : (<Question key={this.props.currentQuestion} />)
+      const quizBody = this.isQuizFinished() ?
+        (<QuizResult key={this.props.currentQuiz} />) : (<Question key={this.props.currentQuestion} />)
       return (
         <div key={activeQuiz.title}>
           <h1>{activeQuiz.title}</h1>

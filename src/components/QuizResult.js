@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getMessage } from '../data/messages'
 import { gradeQuiz } from '../util/quizUtils'
-import { startQuiz } from '../actions'
+import { startQuiz, updateReportCard } from '../actions'
 import ResultItem from './ResultItem'
 
 /**
@@ -14,6 +14,13 @@ class QuizResult extends Component {
     super(props)
 
     this.startNextQuiz = this.startNextQuiz.bind(this)
+
+    // We'll store a user's "report card" via this component's state
+    const quiz = this.props.quizzes[this.props.currentQuiz]
+    this.state = gradeQuiz(quiz, this.props.currentAnswers)
+
+    // Finally, we'll update the user's "report card", i.e their graded quiz results
+    this.props.updateReportCard(this.state)
   }
 
   startNextQuiz() {
@@ -24,17 +31,15 @@ class QuizResult extends Component {
     this.props.startQuiz(nextQuizIndex)
   }
 
-  render() {
-    const activeQuiz = this.props.quizzes[this.props.currentQuiz]
-    const reportCard = gradeQuiz(activeQuiz, this.props.currentAnswers)
 
+  render() {
     return (
       <div>
-        <p>You got <b>{reportCard.score}</b> of <b>{reportCard.gradedAnswers.length}</b> Questions right.</p>
+        <p>You got <b>{this.state.score}</b> of <b>{this.state.gradedAnswers.length}</b> Questions right.</p>
         <p>{getMessage()}</p>
         <p>You had:</p>
         <ol className="results">
-          {reportCard.gradedAnswers.map((a) => {
+          {this.state.gradedAnswers.map((a) => {
             return (
               <ResultItem
                 key={a.question}
@@ -53,7 +58,8 @@ class QuizResult extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    startQuiz: quiz => dispatch(startQuiz(quiz))
+    startQuiz: quiz => dispatch(startQuiz(quiz)),
+    updateReportCard: reportCard => dispatch(updateReportCard(reportCard))
   }
 }
 
@@ -61,6 +67,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     currentQuiz: state.currentQuiz,
     currentAnswers: state.currentAnswers,
+    reportCards: state.reportCards,
     quizzes: state.quizzes
   }
 }

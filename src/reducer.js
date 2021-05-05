@@ -1,9 +1,10 @@
 const initialState = {
-  quizzes: [], // This will be the quizzes that are available
-  quizResults: [], // quizResults will store the user's score and quiz status
-  currentQuiz: 0, // For convenience, we will stash the active quiz in a new variable
+  quizzes: [],        // This will be the quizzes that are available
+  quizResults: [],    // quizResults will store the user's score and quiz status
+  currentQuiz: 0,     // currenQuiz is a reference to the index of what quiz we're taking
   currentAnswers: [], // currentAnswers will be an array of objects
   currentQuestion: 0, // currentQuestion is a reference to the index of what question we're on
+  reportCards: []    // Report Cards are where your most recent quiz results are stored
 }
 
 function rootReducer(state = initialState, action) {
@@ -38,6 +39,19 @@ function rootReducer(state = initialState, action) {
         currentQuiz: action.payload,
         currentQuestion: 0,
         currentAnswers: []
+      }
+    case "UPDATE_REPORT_CARD":
+      // Return an array of report cards *except* the one we want to modify
+      const noUpdate = state.reportCards.filter((rc) => {
+        return rc.quiz !== action.payload.quiz
+      })
+
+      return {
+        ...state,
+        reportCards: [
+          ...noUpdate,
+          action.payload
+        ]
       }
     default:
       return state

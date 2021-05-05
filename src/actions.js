@@ -14,9 +14,14 @@ const startQuiz = (payload) => {
   return { type: "START_QUIZ", payload }
 }
 
+const updateReportCard = (payload) => {
+  return { type: "UPDATE_REPORT_CARD", payload }
+}
+
 export {
   answerQuestion,
   incrementQuestion,
   initializeQuizzes,
-  startQuiz
+  startQuiz,
+  updateReportCard
 }
