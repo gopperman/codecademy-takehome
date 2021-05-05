@@ -32,7 +32,6 @@ class Quiz extends Component {
     }
   }
 
-
   shouldComponentUpdate(nextProps, nextState) {
     return this.props !== nextProps
   }

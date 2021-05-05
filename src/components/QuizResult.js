@@ -17,7 +17,11 @@ class QuizResult extends Component {
   }
 
   startNextQuiz() {
-    this.props.startQuiz()
+    // If we're at the end of the list of quizzes, set the next index to 0 to go
+    // back to the start
+    const nextQuizIndex = (this.props.currentQuiz < (this.props.quizzes.length - 1)) ?
+      this.props.currentQuiz + 1 : 0
+    this.props.startQuiz(nextQuizIndex)
   }
 
   render() {
