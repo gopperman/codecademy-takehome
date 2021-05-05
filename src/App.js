@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { getQuizzes } from './data/quizzes'
 import { initializeQuizzes } from './actions'
 import Quiz from './components/Quiz'
 
 /**
- * The App component is responsible for loading available quizzes, deciding which
- * quiz is next, and rendering the appropriate quiz
+ * The App component is responsible for loading available quizzes, then
+ * rendering the Quiz component
  */
 class App extends Component {
   constructor(props) {
     super(props)
 
     getQuizzes().then((quizzes) => {
+      // Load the quizzes into our state "asynchronously"
       this.props.initializeQuizzes(quizzes)
     })
   }
@@ -39,14 +40,16 @@ class App extends Component {
 
 }
 
-function mapDispatchToProps(dispatch) {
+const  mapDispatchToProps = (dispatch) => {
   return {
     initializeQuizzes: quizzes => dispatch(initializeQuizzes(quizzes))
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps) => {
+  return {
     quizzes: state.quizzes
-})
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -7,17 +7,20 @@
   text-align: center;
 
   margin: 0 auto;
-  max-width: 400px;
+  max-width: 600px;
 
-  font-size: 18px;
+  font-size: 22px;
 }
 
 /**
  * I would normally use a pre-processor, like sass to organize my modules
  * and encourage BEM, but that's not being graded today
  */
+
+/**
+ * Choices
+ */
 .choice__list {
-  font-size: 1.6em;
   list-style-type: none;
   text-align: left;
 }
@@ -42,4 +45,44 @@
 
 .choice--correct {
   border: 1px solid green;
+}
+
+/**
+ * Questions
+ */
+.question__next {
+  background: transparent;
+  border: 1px solid #222;
+  padding: 15px 50px;
+}
+
+.question__next:hover {
+  cursor: pointer;
+}
+.question__result {
+  font-style: italic;
+}
+
+/**
+ * Results
+ */
+.results {
+  font-size: .8em;
+  text-align: left;
+}
+
+.results__answer {
+  font-family: monospace;
+}
+
+.results__answer--correct {
+  color: green;
+}
+
+.results__answer--incorrect {
+  color: red;
+}
+
+.results__item {
+  padding-left: 50px;
 }
